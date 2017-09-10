@@ -26,10 +26,13 @@
 #include <stdio.h>				// for printf functionality
 #include <stdlib.h>				// for exit functionality
 
-//addons
+//addon std libs
 #include <iostream>
 #include <ctime>
 using namespace std;
+
+//custom classes
+#include "Player.h"
 
 //*************************************************************************************
 //
@@ -51,6 +54,7 @@ int COLOR_RED[]   = {255,0,0};
 int COLOR_BLUE[]  = {0,0,255};
 int COLOR_BLACK[] = {0,0,0};
 
+Player player;
 //*************************************************************************************
 //
 // Helper functions
@@ -58,26 +62,8 @@ int COLOR_BLACK[] = {0,0,0};
 //void toRad()
 //
 //		Conversion of float aruments from degrees to radians
-float toRad(GLfloat deg){ 
-	return deg * 2 * 3.14159265 / 360;
-}
 
-void setRGB(int r, int g, int b){
-	glColor3f(r / 255.0,g / 255.0,b / 255.0);
-}
 
-void setRGB(int* color){
-	glColor3f(color[0] / 255.0,color[1] / 255.0,color[2] / 255.0);
-}
-
-void moveCharacter(){
-	/*
-	if (movingUp) 		GR_Y_POS += .25;
-	if (movingDown) 	GR_Y_POS -= .25;
-	if (movingRight) 	GR_X_POS += .25;
-	if (movingLeft) 	GR_X_POS -= .25;
-	*/
-}
 //*************************************************************************************
 //
 // Event Callbacks
@@ -93,45 +79,9 @@ void keyboard_callback( GLFWwindow *window, int key, int scancode, int action, i
 			case GLFW_KEY_ESCAPE:
 				exit(EXIT_SUCCESS);
 				break;
-			case GLFW_KEY_RIGHT:
-			case GLFW_KEY_D:
-				movingRight = true;
-				break;
-			case GLFW_KEY_LEFT:
-			case GLFW_KEY_A:
-				movingLeft = true;
-				break;
-			case GLFW_KEY_UP:
-			case GLFW_KEY_W:
-				movingUp = true;
-				break;
-			case GLFW_KEY_DOWN:
-			case GLFW_KEY_S:
-				movingDown = true;
-				break;
-		
 		}
 	}
-	else if (action == GLFW_RELEASE){
-		switch(key){
-			case GLFW_KEY_RIGHT:
-			case GLFW_KEY_D:
-				movingRight = false;
-				break;
-			case GLFW_KEY_LEFT:
-			case GLFW_KEY_A:
-				movingLeft = false;
-				break;
-			case GLFW_KEY_UP:
-			case GLFW_KEY_W:
-				movingUp = false;
-				break;
-			case GLFW_KEY_DOWN:
-			case GLFW_KEY_S:
-				movingDown = false;
-				break;
-		}
-	} 
+	player.setState();
 }
 void mouse_button_callback( GLFWwindow *window, int button, int action, int mods ){
 	
@@ -215,10 +165,15 @@ void setupOpenGL() {
 //		This method will contain all of the objects to be drawn.
 //
 void renderScene() {
-	glm::mat4 transMtx = glm::translate(glm::mat4(), glm::vec3(WINDOW_WIDTH/2.0, WINDOW_HEIGHT/2.0, 0));
-	glMultMatrixf(&(transMtx)[0][0]);{
-    	drawPlayer();
-	} glMultMatrixf(&(glm::inverse(transMtx))[0][0]);
+	player.drawPlayer();
+}
+//
+//	void update()
+//
+//		Updates all objects
+//
+void update(float frameDiff){
+	player.update(frameDiff);
 }
 
 //*************************************************************************************
@@ -235,11 +190,14 @@ int main( int argc, char* argv[] ) {
 										// GLFW sets up our OpenGL context so must be done first
 	setupOpenGL();						// initialize all of the OpenGL specific information
 
+	player = Player(window, WINDOW_WIDTH/2.0, WINDOW_HEIGHT/2.0, COLOR_RED, COLOR_BLACK);
+
+
 	//  This is our draw loop - all rendering is done here.  We use a loop to keep the window open
 	//	until the user decides to close the window and quit the program.  Without a loop, the
 	//	window will display once and then the program exits.
 	while( !glfwWindowShouldClose(window) ) {
-
+			clock_t start = clock();
 			glDrawBuffer( GL_BACK );		// ensure we are drawing to the back buffer
 			glClear( GL_COLOR_BUFFER_BIT );	// clear the current color contents in the buffer
 
@@ -265,6 +223,9 @@ int main( int argc, char* argv[] ) {
 			glLoadIdentity();				// set the matrix to be the identity
 
 			renderScene();		//draw everything to the screen
+
+			float frameDiff = (float)(clock() - start) * 1000 / CLOCKS_PER_SEC;
+			update(frameDiff);			//update all objects
 
 			// check OpenGL error
 		    GLenum err;

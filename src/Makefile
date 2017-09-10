@@ -22,7 +22,7 @@
 ########################################
 
 TARGET = sq1
-OBJECTS = main.o
+OBJECTS = main.o Player.o
 
 LOCAL_INC_PATH = /Users/jpaone/Desktop/include
 LOCAL_LIB_PATH = /Users/jpaone/Desktop/lib
@@ -120,4 +120,4 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CFLAGS) -o $@ $^ $(LIBPATH) $(LIBS)
 
 # DEPENDENCIES
-main.o: main.cpp 
+main.o: main.cpp Player.cpp
