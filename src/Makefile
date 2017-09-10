@@ -65,12 +65,6 @@ INCPATH += -I$(LAB_INC_PATH)
 LIBPATH += -L$(LAB_LIB_PATH)
 
 #############################
-## SETUP SOIL
-#############################
-
-LIBS += -lSOIL
-
-#############################
 ## SETUP OpenGL & GLFW 
 #############################
 
@@ -126,4 +120,4 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CFLAGS) -o $@ $^ $(LIBPATH) $(LIBS)
 
 # DEPENDENCIES
-main.o: main.cpp WorldMap.h
+main.o: main.cpp 
