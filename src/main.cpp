@@ -209,7 +209,6 @@ void setupOpenGL() {
 // Rendering / Drawing Functions - this is where the magic happens!
 
 
-
 //
 //	void renderScene()
 //

@@ -34,3 +34,4 @@ Player::void drawPlayer(){
 	} glMultMatrixf(&(glm::inverse(scaleMtx))[0][0]);
 	drawTriangle(COLOR_RED);
 }
+
