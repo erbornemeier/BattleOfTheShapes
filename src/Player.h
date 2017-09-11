@@ -30,38 +30,46 @@ class Player{
 
 public:
 
+	//constructors
 	Player();
 	Player(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec);
 
-	void update(float frameDiff);
-	void setState();
+	//update and state setting
+	void update(const double& frameDiff);
+	void setState(bool up, bool down, bool left, bool right);
 
+	//actions
 	void shoot();
 	void move();
+
+	//drawing
 	void drawPlayer();
 
-	enum Translation {backwards = -1, stopped = 0, forwards = 1};
-	enum Rotation 	{leftRot = 1, noRot = 0, rightRot = -1};
-	int moving;
-	int rotating;
 
 private:
+
+	//helpers
 	void drawTriangle(int* color);
 	void setRGB(int* color);
 	float toRad(float deg);
 
+	//draw reference
 	GLFWwindow* window;
 
+	//attributes
 	float posX;
 	float posY;
 	float rot;
 	float size;
-	float transSpeed = 5;
-	float rotSpeed = 2;
-
+	static float transSpeed = 0.5;
+	static float rotSpeed = 0.2;
 	int* colorPrim;
 	int* colorSec;
 
-
+	//states
+	enum Translation {backwards = -1, stopped = 0, forwards = 1};
+	enum Rotation 	{leftRot = 1, noRot = 0, rightRot = -1};
+	int moving;
+	int rotating;
 
 };

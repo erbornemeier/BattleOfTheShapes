@@ -28,7 +28,8 @@
 
 //addon std libs
 #include <iostream>
-#include <ctime>
+#include <chrono>
+#include <unistd.h>
 using namespace std;
 
 //custom classes
@@ -44,10 +45,10 @@ using namespace std;
 int WINDOW_WIDTH = 1920, WINDOW_HEIGHT = 1080;
 
 //movement bools
-bool movingRight = false;
-bool movingLeft = false;
-bool movingUp = false;
-bool movingDown = false;
+bool rightKey = false;
+bool leftKey = false;
+bool upKey = false;
+bool downKey = false;
 
 //colors
 int COLOR_RED[]   = {255,0,0};
@@ -77,11 +78,49 @@ void keyboard_callback( GLFWwindow *window, int key, int scancode, int action, i
 	if (action != GLFW_RELEASE){
 		switch (key){
 			case GLFW_KEY_ESCAPE:
+			case GLFW_KEY_Q:
 				exit(EXIT_SUCCESS);
 				break;
+			case GLFW_KEY_RIGHT:
+			case GLFW_KEY_D:
+				rightKey = true;
+				break;
+			case GLFW_KEY_LEFT:
+			case GLFW_KEY_A:
+				leftKey = true;
+				break;
+			case GLFW_KEY_UP:
+			case GLFW_KEY_W:
+				upKey = true;
+				break;
+			case GLFW_KEY_DOWN:
+			case GLFW_KEY_S:
+				downKey = true;
+				break;
+		
 		}
 	}
-	player.setState();
+	else if (action == GLFW_RELEASE){
+		switch(key){
+			case GLFW_KEY_RIGHT:
+			case GLFW_KEY_D:
+				rightKey = false;
+				break;
+			case GLFW_KEY_LEFT:
+			case GLFW_KEY_A:
+				leftKey = false;
+				break;
+			case GLFW_KEY_UP:
+			case GLFW_KEY_W:
+				upKey = false;
+				break;
+			case GLFW_KEY_DOWN:
+			case GLFW_KEY_S:
+				downKey = false;
+				break;
+		}
+	} 
+	player.setState(upKey, downKey, leftKey, rightKey);
 }
 void mouse_button_callback( GLFWwindow *window, int button, int action, int mods ){
 	
@@ -172,7 +211,7 @@ void renderScene() {
 //
 //		Updates all objects
 //
-void update(float frameDiff){
+void update(const double& frameDiff){
 	player.update(frameDiff);
 }
 
@@ -197,7 +236,9 @@ int main( int argc, char* argv[] ) {
 	//	until the user decides to close the window and quit the program.  Without a loop, the
 	//	window will display once and then the program exits.
 	while( !glfwWindowShouldClose(window) ) {
-			clock_t start = clock();
+			chrono::time_point<chrono::system_clock> start, end;
+			start = chrono::system_clock::now();	//get the start of the draw loop time
+
 			glDrawBuffer( GL_BACK );		// ensure we are drawing to the back buffer
 			glClear( GL_COLOR_BUFFER_BIT );	// clear the current color contents in the buffer
 
@@ -224,9 +265,6 @@ int main( int argc, char* argv[] ) {
 
 			renderScene();		//draw everything to the screen
 
-			float frameDiff = (float)(clock() - start) * 1000 / CLOCKS_PER_SEC;
-			update(frameDiff);			//update all objects
-
 			// check OpenGL error
 		    GLenum err;
 		    while ((err = glGetError()) != GL_NO_ERROR) {
@@ -235,6 +273,11 @@ int main( int argc, char* argv[] ) {
 
 			glfwSwapBuffers(window);		// flush the OpenGL commands and make sure they get rendered!
 			glfwPollEvents();				// check for any events and signal to redraw screen
+
+			end = chrono::system_clock::now();	//get the end of the draw loop time
+			chrono::duration<double> frameDiff = (end - start)* 100; //find draw loop time and scale it
+
+			update(frameDiff.count());			//update all objects
 	}
 
 	return 0;

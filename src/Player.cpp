@@ -18,56 +18,20 @@ Player::Player(GLFWwindow* window,float x , float y , int* colorPrim, int* color
 	this->rotating = noRot;
 }
 
-void Player::update(float frameDiff){
+void Player::update(const double& frameDiff){
 		posX += frameDiff * moving * transSpeed * cos(toRad(rot));
 		posY += frameDiff * moving * transSpeed * sin(toRad(rot));
 		rot  += frameDiff * rotating * rotSpeed;
 }
 
-void Player::setState(){
-	if ((glfwGetKey(window, GLFW_KEY_UP) != GLFW_RELEASE || 
-		glfwGetKey(window, GLFW_KEY_W) != GLFW_RELEASE) &&
-		(glfwGetKey(window, GLFW_KEY_DOWN) != GLFW_RELEASE || 
-		glfwGetKey(window, GLFW_KEY_S) != GLFW_RELEASE)) {
-			moving = stopped;
-	}
-	else if (glfwGetKey(window, GLFW_KEY_UP) != GLFW_RELEASE || 
-			 glfwGetKey(window, GLFW_KEY_W) != GLFW_RELEASE){
-				moving = forwards;
-	}
-	else if (glfwGetKey(window, GLFW_KEY_DOWN) != GLFW_RELEASE || 
-			 glfwGetKey(window, GLFW_KEY_S) != GLFW_RELEASE){
-				moving = backwards;
-	}
-	else if ((glfwGetKey(window, GLFW_KEY_UP) == GLFW_RELEASE && 
-			glfwGetKey(window, GLFW_KEY_W) == GLFW_RELEASE) &&
-			(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_RELEASE && 
-			glfwGetKey(window, GLFW_KEY_S) == GLFW_RELEASE)){
-				moving = stopped;
-	}
+void Player::setState(bool up, bool down, bool left, bool right){
+	if ((up && down) || (!up && !down)) moving = stopped;
+	else if (up) moving = forwards;
+	else if (down) moving = backwards;
 
-	if ((glfwGetKey(window, GLFW_KEY_LEFT) != GLFW_RELEASE || 
-		glfwGetKey(window, GLFW_KEY_A) != GLFW_RELEASE) &&
-		(glfwGetKey(window, GLFW_KEY_RIGHT) != GLFW_RELEASE || 
-		glfwGetKey(window, GLFW_KEY_D) != GLFW_RELEASE)) {
-			rotating = noRot;
-	}
-	else if (glfwGetKey(window, GLFW_KEY_LEFT) != GLFW_RELEASE || 
-			 glfwGetKey(window, GLFW_KEY_A) != GLFW_RELEASE){
-				rotating = leftRot;
-	}
-	else if (glfwGetKey(window, GLFW_KEY_RIGHT) != GLFW_RELEASE || 
-			 glfwGetKey(window, GLFW_KEY_D) != GLFW_RELEASE){
-				rotating = rightRot;
-	}
-	else if ((glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_RELEASE && 
-		glfwGetKey(window, GLFW_KEY_A) == GLFW_RELEASE) &&
-		(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_RELEASE && 
-		glfwGetKey(window, GLFW_KEY_D) == GLFW_RELEASE)){
-				rotating = noRot;
-	}
-
-
+	if ((left && right) || (!left && !right)) rotating = noRot;
+	else if (left) rotating = leftRot;
+	else if (right) rotating = rightRot;
 }
 
 void Player::shoot(){
