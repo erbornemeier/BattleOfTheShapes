@@ -10,6 +10,7 @@
  *		This is the player class that handles drawing, shooting, and moving functionality
  *		for the player
  */
+
 #pragma once
 #include <GLFW/glfw3.h>		// include GLFW framework header
 
@@ -24,7 +25,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
+#include <vector>
 using namespace std;
+
+#include "drawingHelpers.h"
 
 class Player{
 
@@ -40,7 +44,6 @@ public:
 
 	//actions
 	void shoot();
-	void move();
 
 	//drawing
 	void drawPlayer();
@@ -48,21 +51,14 @@ public:
 
 private:
 
-	//helpers
-	void drawTriangle(int* color);
-	void setRGB(int* color);
-	float toRad(float deg);
-
 	//draw reference
 	GLFWwindow* window;
 
 	//attributes
-	float posX;
-	float posY;
+	float posX, posY;
 	float rot;
-	float size;
-	static float transSpeed = 0.5;
-	static float rotSpeed = 0.2;
+	float transSpeed = 0.5;
+	float rotSpeed = 0.2;
 	int* colorPrim;
 	int* colorSec;
 
@@ -71,5 +67,8 @@ private:
 	enum Rotation 	{leftRot = 1, noRot = 0, rightRot = -1};
 	int moving;
 	int rotating;
+
+	//possessions
+	vector<Bullet> bullets;
 
 };
