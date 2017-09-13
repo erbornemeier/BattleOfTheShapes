@@ -6,6 +6,7 @@ public:
 	Bullet();
 	Bullet(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec);
 
+	//destructor
 	~Bullet();
 
 	//update and state setting
@@ -17,9 +18,12 @@ public:
 	void move();
 
 	//drawing
-	void drawPlayer();
+	void drawBullet();
 
 private:
+
+	void drawCircle();
+
 	float speed = 2.0;
 
 }
