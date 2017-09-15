@@ -26,19 +26,23 @@ using namespace std;
 #include "Enemy.h"
 #include "Enemies/SquareEnemy.h"
 #include "DrawingHelpers.h"
+#include "Point.h"
 
 class Level {
 
 	public:
-		Level(int playerX, int playerY, int numEnemies, float enemySpawnRate, float scoreMult);
+		Level(Point playerPos, int numEnemies, float enemySpawnRate, float scoreMult);
 
 		void load(Player& p, int& numEnemies, float& enemySpawnRate, float& scoreMult);
 
 	private:
-		int playerX, playerY;
+		Point playerPos;
 		int numEnemies;
 		float enemySpawnRate;
 		float scoreMult;
+
+		int* colorPrimPlayer, colorSecPlayer;
+		int* colorPrimEnemy, colorSecEnemy;
 
 
 };

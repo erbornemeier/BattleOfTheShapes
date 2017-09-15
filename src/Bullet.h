@@ -31,6 +31,7 @@
 using namespace std;
 
 #include "DrawingHelpers.h"
+#include "Point.h"
 
 class Bullet{
 
@@ -38,7 +39,7 @@ public:
 
 	//constructors
 	Bullet();
-	Bullet(GLFWwindow* window, float x, float y, float dir, int* colorPrim, int* colorSec);
+	Bullet(GLFWwindow* window, Point pos, float dir, int* colorPrim, int* colorSec);
 
 	//destructor
 	~Bullet();
@@ -57,7 +58,7 @@ private:
 	GLFWwindow* window;
 
 	//attributes
-	float posX, posY;
+	Point pos;
 	float dir;
 	float speed = 10;
 	int* colorPrim;

@@ -1,14 +1,17 @@
 #include "Level.h"
 
-	Level(int playerX, int playerY, int numEnemies, float enemySpawnRate, float scoreMult){
-		this->playerX = playerX;
-		this->playerY = playerY;
-
+	Level(Point playerPos, int numEnemies, float enemySpawnRate, float scoreMult){
+		
+		this->playerPos = playerPos;
 		this->numEnemies = numEnemies;
 		this->enemySpawnRate = enemySpawnRate;
 		this->scoreMult = scoreMult;
+
 	}
 
-	void load(int&, int& numEnemies, float& enemySpawnRate, float& scoreMult){
-		p = Player()
+	void load(GFLWwindow* window , int& numEnemies, float& enemySpawnRate, float& scoreMult){
+		p = Player(window, this->playerPos, colorPrimPlayer, colorSecPlayer);
+		numEnemies = this->numEnemies;
+		enemySpawnRate = this->enemySpawnRate;
+		scoreMult = this->scoreMult;
 	}

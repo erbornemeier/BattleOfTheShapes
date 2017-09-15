@@ -33,6 +33,7 @@ using namespace std;
 //custom game libs
 #include "Bullet.h"
 #include "DrawingHelpers.h"
+#include "Point.h"
 
 class Player{
 
@@ -40,7 +41,7 @@ public:
 
 	//constructors
 	Player();
-	Player(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec);
+	Player(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec);
 
 	//getters
 	float getPosX();
@@ -67,7 +68,7 @@ private:
 	GLFWwindow* window;
 
 	//attributes
-	float posX, posY;
+	Point pos;
 	float rot;
 	float transSpeed = 5;
 	float rotSpeed = 2;  

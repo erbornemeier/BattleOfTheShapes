@@ -39,6 +39,7 @@ using namespace std;
 #include "Enemy.h"
 #include "Enemies/SquareEnemy.h"
 #include "DrawingHelpers.h"
+#include "Point.h"
 
 class LevelEngine {
 

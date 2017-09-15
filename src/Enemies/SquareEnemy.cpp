@@ -1,16 +1,14 @@
 #include "SquareEnemy.h"
 
-SquareEnemy::SquareEnemy():Enemy(){}
-
-SquareEnemy::SquareEnemy(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec)
-	:Enemy(window, x, y, colorPrim, colorSec){
+SquareEnemy::SquareEnemy(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec)
+	:Enemy(window, pos, colorPrim, colorSec){
 		playerVec = 0;
 		transSpeed = 4;
 	}
 
 //drawing
 void SquareEnemy::draw () {
-	glm::mat4 transMtx = glm::translate(glm::mat4(), glm::vec3(posX,posY,0));
+	glm::mat4 transMtx = glm::translate(glm::mat4(), glm::vec3(pos.x,pos.y,0));
 		glMultMatrixf(&(transMtx)[0][0]);{
 			//secondary triangle
 			glm::mat4 scaleMtx = glm::scale(glm::mat4(), glm::vec3(1.5,1.5,1));
@@ -35,6 +33,6 @@ void SquareEnemy::update(const double& frameDiff) {
 	posY += frameDiff * transSpeed * sin(playerVec);
 }
 
-void SquareEnemy::setState(float playerX, float playerY) {
-	playerVec = atan2(playerY - posY, playerX - posX);
+void SquareEnemy::setState(Point playerPos) {
+	playerVec = atan2(playerPos.y - posY, playerPos.x - posX);
 }

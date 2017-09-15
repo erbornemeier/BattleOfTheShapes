@@ -27,19 +27,19 @@ using namespace std;
 
 #include "Enemy.h"
 #include "DrawingHelpers.h"
+#include "Point.h"
 
 class SquareEnemy : public Enemy {
 
 public:
-	SquareEnemy();
-	SquareEnemy(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec);
+	SquareEnemy(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec);
 
 	//drawing
 	void draw () override;
 
 	//update and state setting
 	void update(const double& frameDiff) override;
-	virtual void setState(float playerX, float playerY);
+	virtual void setState(Point playerPos) override;
 
 private:
 

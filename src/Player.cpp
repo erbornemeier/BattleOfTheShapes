@@ -2,12 +2,11 @@
 
 Player::Player(){}
 
-Player::Player(GLFWwindow* window,float x , float y , int* colorPrim, int* colorSec){
+Player::Player(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec){
 	
 	this->window = window;
 
-	this->posX = x;
-	this->posY = y;
+	this->pos = pos;
 	this->rot = 90;
 
 	this->colorPrim = colorPrim;
@@ -17,13 +16,12 @@ Player::Player(GLFWwindow* window,float x , float y , int* colorPrim, int* color
 	this->rotating = noRot;
 }
 
-float Player::getPosX(){ return posX; }
-float Player::getPosY(){ return posY; }
+float Player::getPos(){ return pos; }
 
 void Player::update(const double& frameDiff){
-		posX += frameDiff * moving * transSpeed * cos(DrawingHelpers::toRad(rot));
-		posY += frameDiff * moving * transSpeed * sin(DrawingHelpers::toRad(rot));
-		rot  += frameDiff * rotating * rotSpeed;
+		pos.x += frameDiff * moving * transSpeed * cos(DrawingHelpers::toRad(rot));
+		pos.y += frameDiff * moving * transSpeed * sin(DrawingHelpers::toRad(rot));
+		rot   += frameDiff * rotating * rotSpeed;
 
 		checkBullets();
 
@@ -53,7 +51,7 @@ void Player::shoot(float mx, float my){
 	float shootAngle = atan2(my - posY, mx - posX);
 
 	//create a new bullet
-	bullets.push_back(Bullet(window, posX, posY, shootAngle, 
+	bullets.push_back(Bullet(window, pos, shootAngle, 
 					         DrawingHelpers::COLOR_GREEN, DrawingHelpers::COLOR_BLACK ));
 
 }

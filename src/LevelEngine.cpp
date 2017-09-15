@@ -8,10 +8,11 @@ LevelEngine(){
 void loadLevelsFromFile(String levelFile){
 	ifstream f(levelFile);
 	while (!f.eof()){
-		int playerX, playerY, numEnemies;
+		Point playerPos;
+		int numEnemies;
 		float enemySpawnRate, scoreMult;
-		f >> playerX >> playerY >> numEnemies >> enemySpawnRate >> scoreMult;
-		levels.push_back(new Level(playerX, playerY, numEnemies, enemySpawnRate, scoreMult));
+		f >> playerPos.x >> playerPos.y >> numEnemies >> enemySpawnRate >> scoreMult;
+		levels.push_back(new Level(playerPos, numEnemies, enemySpawnRate, scoreMult));
 	}
 }
 

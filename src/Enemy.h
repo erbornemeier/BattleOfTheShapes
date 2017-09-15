@@ -28,17 +28,18 @@ using namespace std;
 
 //custom game libs
 #include "DrawingHelpers.h"
+#include "Point.h"
 
 class Enemy{
 public:
 
 	//constructors
 	Enemy();
-	Enemy(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec);
+	Enemy(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec);
 
 	//update and state setting
 	virtual void update(const double& frameDiff) = 0;
-	virtual void setState(float playerX, float playerY) = 0;
+	virtual void setState(Point playerPos) = 0;
 
 	//drawing
 	virtual void draw() = 0;
@@ -49,7 +50,7 @@ protected:
 	GLFWwindow* window;
 
 	//attributes
-	float posX, posY;
+	Point pos;
 	float transSpeed;
 	int* colorPrim;
 	int* colorSec;
