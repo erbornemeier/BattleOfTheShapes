@@ -1,14 +1,11 @@
 /*
- *  CSCI 441 Computer Graphics, Fall 2017
- *
  *  Project: SQ1
- *  File: Bullet.h
+ *  File: Enemy.h
  *
  *  Author: Easton Bornemeier
  *
  *  Description:
- *		This is the bullet class used for handling the movement and the collision
- *      detection of the bullets and the enemies
+ *		An abstract parent class used to implement different enemies
  */
 
 #pragma once
@@ -26,40 +23,34 @@
 
 //std libs
 #include <iostream>
-#include <vector>
 #include <cmath>
 using namespace std;
 
+//custom game libs
 #include "DrawingHelpers.h"
 
-class Bullet{
-
+class Enemy{
 public:
 
 	//constructors
-	Bullet();
-	Bullet(GLFWwindow* window, float x, float y, float dir, int* colorPrim, int* colorSec);
-
-	//destructor
-	~Bullet();
+	Enemy();
+	Enemy(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec);
 
 	//update and state setting
-	void update(const double& frameDiff);
+	virtual void update(const double& frameDiff) = 0;
+	virutal void setState(int playerX, int playerY) = 0;
 
 	//drawing
-	void drawBullet();
-
-	//bounds check
-	bool inBounds(int x, int y);
+	virtual void draw() = 0;
 
 private:
 
+	//draw reference
 	GLFWwindow* window;
 
 	//attributes
 	float posX, posY;
-	float dir;
-	float speed = 10;
+	float transSpeed;
 	int* colorPrim;
 	int* colorSec;
 

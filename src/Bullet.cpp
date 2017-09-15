@@ -1,6 +1,8 @@
+#include "Bullet.h"
+
 Bullet::Bullet(){}
 
-Bullet::Bullet(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec){
+Bullet::Bullet(GLFWwindow* window, float x, float y, float dir, int* colorPrim, int* colorSec){
 	
 	this->window = window;
 
@@ -12,9 +14,11 @@ Bullet::Bullet(GLFWwindow* window, float x, float y, int* colorPrim, int* colorS
 	this->colorSec = colorSec;
 }
 
+Bullet::~Bullet(){}
+
 void Bullet::update(const double& frameDiff){
-		posX += frameDiff * moving * speed * cos(toRad(dir));
-		posY += frameDiff * moving * speed * sin(toRad(dir));
+		posX += frameDiff  * speed * cos(dir);
+		posY += frameDiff  * speed * sin(dir);
 }
 
 void Bullet::drawBullet(){
@@ -24,12 +28,17 @@ void Bullet::drawBullet(){
 		//secondary circle
 		glm::mat4 scaleMtx = glm::scale(glm::mat4(), glm::vec3(1.5,1.5,1));
 		glMultMatrixf(&(scaleMtx)[0][0]);{
-			drawingHelpers::drawCircle(colorSec);
+			DrawingHelpers::drawCircle(colorSec);
 		} glMultMatrixf(&(glm::inverse(scaleMtx))[0][0]);
 
 		//primay circle
-		drawingHelpers::drawTriangle(colorPrim);
+		DrawingHelpers::drawCircle(colorPrim);
 
 	} glMultMatrixf(&(glm::inverse(transMtx))[0][0]);
 
+}
+
+bool Bullet::inBounds(int x, int y){
+	if (posX < 0 || posX > x || posY < 0 || posY > y) return false;
+	return true;
 }

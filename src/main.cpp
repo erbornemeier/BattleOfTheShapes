@@ -10,7 +10,6 @@
  *		This is an extra credit assignment for graphics to make a game 
  *      using 2D openGL primitives. It is called Battle of the Shapes
  */
-
 #include <GLFW/glfw3.h>		// include GLFW framework header
 
 #ifdef __APPLE__			// if compiling on Mac OS
@@ -34,6 +33,7 @@ using namespace std;
 
 //custom classes
 #include "Player.h"
+#include "DrawingHelpers.h"
 
 //*************************************************************************************
 //
@@ -44,17 +44,19 @@ using namespace std;
 // for later on in case the window gets resized.
 int WINDOW_WIDTH = 1920, WINDOW_HEIGHT = 1080;
 
-//movement bools
+//keyboard bools
 bool rightKey = false;
 bool leftKey = false;
 bool upKey = false;
 bool downKey = false;
 
-//colors
-int COLOR_RED[]   = {255,0,0};
-int COLOR_BLUE[]  = {0,0,255};
-int COLOR_BLACK[] = {0,0,0};
+//mouse info
+float M_X, M_Y;
 
+/*
+* TODO: REMOVE THIS GLOBAL IMPLEMENTATION
+*/
+//player
 Player player;
 //*************************************************************************************
 //
@@ -123,12 +125,13 @@ void keyboard_callback( GLFWwindow *window, int key, int scancode, int action, i
 	player.setState(upKey, downKey, leftKey, rightKey);
 }
 void mouse_button_callback( GLFWwindow *window, int button, int action, int mods ){
-	
+	if (action != GLFW_RELEASE) player.shoot(M_X, M_Y);
 }
 
 /*PASSIVE EVENTS*/
 void cursor_callback(GLFWwindow *window, double x, double y){
-
+	M_X = x;
+	M_Y = WINDOW_HEIGHT - y;
 }
 
 //*************************************************************************************
@@ -205,6 +208,7 @@ void setupOpenGL() {
 //
 void renderScene() {
 	player.drawPlayer();
+	player.drawBullets();
 }
 //
 //	void update()
@@ -229,7 +233,8 @@ int main( int argc, char* argv[] ) {
 										// GLFW sets up our OpenGL context so must be done first
 	setupOpenGL();						// initialize all of the OpenGL specific information
 
-	player = Player(window, WINDOW_WIDTH/2.0, WINDOW_HEIGHT/2.0, COLOR_RED, COLOR_BLACK);
+	player = Player(window, WINDOW_WIDTH/2.0, WINDOW_HEIGHT/2.0, 
+			        DrawingHelpers::COLOR_RED, DrawingHelpers::COLOR_BLACK);
 
 
 	//  This is our draw loop - all rendering is done here.  We use a loop to keep the window open

@@ -24,11 +24,15 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+//std libs
 #include <iostream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
-#include "drawingHelpers.h"
+//custom game libs
+#include "Bullet.h"
+#include "DrawingHelpers.h"
 
 class Player{
 
@@ -43,10 +47,14 @@ public:
 	void setState(bool up, bool down, bool left, bool right);
 
 	//actions
-	void shoot();
+	void shoot(float mx, float my);
 
 	//drawing
 	void drawPlayer();
+	void drawBullets();
+
+	//bounds check
+	void checkBullets();
 
 
 private:
@@ -57,8 +65,9 @@ private:
 	//attributes
 	float posX, posY;
 	float rot;
-	float transSpeed = 0.5;
-	float rotSpeed = 0.2;
+	float transSpeed = 5;
+	float rotSpeed = 2;  
+	uint maxBullets = 50;
 	int* colorPrim;
 	int* colorSec;
 
@@ -67,6 +76,7 @@ private:
 	enum Rotation 	{leftRot = 1, noRot = 0, rightRot = -1};
 	int moving;
 	int rotating;
+	float timeToFire = 0;
 
 	//possessions
 	vector<Bullet> bullets;
