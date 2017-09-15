@@ -58,7 +58,7 @@ void Player::shoot(float mx, float my){
 
 }
 
-void Player::drawPlayer(){
+void Player::draw(){
 	glm::mat4 transMtx = glm::translate(glm::mat4(), glm::vec3(posX,posY,0));
 	glMultMatrixf(&(transMtx)[0][0]);{
 		glm::mat4 rotMtx = glm::rotate(glm::mat4(), DrawingHelpers::toRad(rot - 90) , glm::vec3(0,0,1));

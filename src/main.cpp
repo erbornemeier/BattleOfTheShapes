@@ -30,13 +30,10 @@
 #include <vector>
 #include <chrono>
 #include <unistd.h>
+#include <fstream>
 using namespace std;
 
-//custom classes
-#include "Player.h"
-#include "Enemy.h"
-#include "SquareEnemy.h"
-#include "DrawingHelpers.h"
+#include "LevelEngine.h"
 
 //*************************************************************************************
 //
@@ -59,10 +56,8 @@ float M_X, M_Y;
 /*
 * TODO: REMOVE THIS GLOBAL IMPLEMENTATION
 */
-//player
-Player player;
-//enemies
-vector<Enemy*> enemies;
+//level engine
+LevelEngine levelEngine;
 //*************************************************************************************
 //
 // Helper functions

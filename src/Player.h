@@ -54,7 +54,7 @@ public:
 	void shoot(float mx, float my);
 
 	//drawing
-	void drawPlayer();
+	void draw();
 	void drawBullets();
 
 	//bounds check
