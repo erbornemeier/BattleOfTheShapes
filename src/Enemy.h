@@ -38,12 +38,12 @@ public:
 
 	//update and state setting
 	virtual void update(const double& frameDiff) = 0;
-	virutal void setState(int playerX, int playerY) = 0;
+	virtual void setState(int playerX, int playerY) = 0;
 
 	//drawing
 	virtual void draw() = 0;
 
-private:
+protected:
 
 	//draw reference
 	GLFWwindow* window;

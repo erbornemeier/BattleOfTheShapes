@@ -27,6 +27,11 @@ void DrawingHelpers::drawCircle(int* color){
 	} glEnd();
 }
 
+void DrawingHelpers::drawSquare(int * color){
+	//draw a square
+
+}
+
 void DrawingHelpers::setRGB(int* color){
 	glColor3f(color[0] / 255.0,color[1] / 255.0,color[2] / 255.0);
 }

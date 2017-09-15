@@ -30,12 +30,6 @@
 #include <cmath>
 using namespace std;
 
-//colors
-int DrawingHelpers::COLOR_RED[] = {255,0,0};
-int DrawingHelpers::COLOR_GREEN[] = {0,255,0};
-int DrawingHelpers::COLOR_BLUE[] = {0,0,255};
-int DrawingHelpers::COLOR_BLACK[] = {0,0,0};
-
 class DrawingHelpers{
 	
 public:
@@ -50,4 +44,10 @@ public:
 
 	//8 bit color input
 	static void setRGB(int* color);
+
+	//colors
+	static int COLOR_RED[];
+	static int COLOR_GREEN[];
+	static int COLOR_BLUE[];
+	static int COLOR_BLACK[];
 };

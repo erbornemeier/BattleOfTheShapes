@@ -1,0 +1,43 @@
+#include "SquareEnemy.h"
+
+SquareEnemy::SquareEnemy():Enemy(){}
+
+SquareEnemy::SquareEnemy(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec, float playerX, float playerY)
+	:Enemy(window, x, y, colorPrim, colorSec){
+
+		playerVec = 0;
+	}
+
+//drawing
+void SquareEnemy::draw () {
+	glm::mat4 transMtx = glm::translate(glm::mat4(), glm::vec3(posX,posY,0));
+		glMultMatrixf(&(transMtx)[0][0]);{
+			//secondary triangle
+			glm::mat4 scaleMtx = glm::scale(glm::mat4(), glm::vec3(1.5,1.5,1));
+			glMultMatrixf(&(scaleMtx)[0][0]);{
+				DrawingHelpers::drawSquare(colorSec);
+			} glMultMatrixf(&(glm::inverse(scaleMtx))[0][0]);
+
+			//primary triangle
+			glm::mat4 scaleMtx2 = glm::scale(glm::mat4(), glm::vec3(1,1,1));
+			glMultMatrixf(&(scaleMtx2)[0][0]);{
+				DrawingHelpers::drawSquare(colorPrim);
+			} glMultMatrixf(&(glm::inverse(scaleMtx2))[0][0]);
+
+		} glMultMatrixf(&(glm::inverse(transMtx))[0][0]);
+
+}
+
+//update and state setting
+void SquareEnemy::update(const double& frameDiff) {
+
+	posX += frameDiff * transSpeed * cos(DrawingHelpers::toRad(playerVec));
+	posY += frameDiff * transSpeed * sin(DrawingHelpers::toRad(playerVec));
+
+}
+
+void SquareEnemy::setState(int playerX, int playerY) {
+
+
+
+}
