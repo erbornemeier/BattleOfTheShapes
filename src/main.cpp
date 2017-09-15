@@ -27,12 +27,15 @@
 
 //addon std libs
 #include <iostream>
+#include <vector>
 #include <chrono>
 #include <unistd.h>
 using namespace std;
 
 //custom classes
 #include "Player.h"
+#include "Enemy.h"
+#include "SquareEnemy.h"
 #include "DrawingHelpers.h"
 
 //*************************************************************************************
@@ -58,6 +61,8 @@ float M_X, M_Y;
 */
 //player
 Player player;
+//enemies
+vector<Enemy*> enemies;
 //*************************************************************************************
 //
 // Helper functions
@@ -207,16 +212,23 @@ void setupOpenGL() {
 //		This method will contain all of the objects to be drawn.
 //
 void renderScene() {
-	player.drawPlayer();
+	player.drawPlayer(); 
 	player.drawBullets();
+	for (Enemy* e: enemies)
+		e->draw();
 }
 //
 //	void update()
 //
 //		Updates all objects
 //
+
 void update(const double& frameDiff){
 	player.update(frameDiff);
+	for (Enemy* e: enemies){
+		e->setState(player.getPosX(), player.getPosY());
+		e->update(frameDiff);
+	}
 }
 
 //*************************************************************************************
@@ -235,8 +247,9 @@ int main( int argc, char* argv[] ) {
 
 	player = Player(window, WINDOW_WIDTH/2.0, WINDOW_HEIGHT/2.0, 
 			        DrawingHelpers::COLOR_RED, DrawingHelpers::COLOR_BLACK);
-
-
+	for (int i = 1; i <= 1; i++)
+		enemies.push_back(new SquareEnemy(window,(float) i*WINDOW_WIDTH/8, WINDOW_HEIGHT/8.0, 
+			        DrawingHelpers::COLOR_BLUE, DrawingHelpers::COLOR_BLACK));
 	//  This is our draw loop - all rendering is done here.  We use a loop to keep the window open
 	//	until the user decides to close the window and quit the program.  Without a loop, the
 	//	window will display once and then the program exits.

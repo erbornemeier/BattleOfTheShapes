@@ -42,6 +42,10 @@ public:
 	Player();
 	Player(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec);
 
+	//getters
+	float getPosX();
+	float getPosY();
+
 	//update and state setting
 	void update(const double& frameDiff);
 	void setState(bool up, bool down, bool left, bool right);

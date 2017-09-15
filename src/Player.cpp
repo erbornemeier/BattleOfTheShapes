@@ -17,6 +17,9 @@ Player::Player(GLFWwindow* window,float x , float y , int* colorPrim, int* color
 	this->rotating = noRot;
 }
 
+float Player::getPosX(){ return posX; }
+float Player::getPosY(){ return posY; }
+
 void Player::update(const double& frameDiff){
 		posX += frameDiff * moving * transSpeed * cos(DrawingHelpers::toRad(rot));
 		posY += frameDiff * moving * transSpeed * sin(DrawingHelpers::toRad(rot));

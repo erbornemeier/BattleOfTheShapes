@@ -2,10 +2,10 @@
 
 SquareEnemy::SquareEnemy():Enemy(){}
 
-SquareEnemy::SquareEnemy(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec, float playerX, float playerY)
+SquareEnemy::SquareEnemy(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec)
 	:Enemy(window, x, y, colorPrim, colorSec){
-
 		playerVec = 0;
+		transSpeed = 4;
 	}
 
 //drawing
@@ -31,13 +31,10 @@ void SquareEnemy::draw () {
 //update and state setting
 void SquareEnemy::update(const double& frameDiff) {
 
-	posX += frameDiff * transSpeed * cos(DrawingHelpers::toRad(playerVec));
-	posY += frameDiff * transSpeed * sin(DrawingHelpers::toRad(playerVec));
-
+	posX += frameDiff * transSpeed * cos(playerVec);
+	posY += frameDiff * transSpeed * sin(playerVec);
 }
 
-void SquareEnemy::setState(int playerX, int playerY) {
-
-
-
+void SquareEnemy::setState(float playerX, float playerY) {
+	playerVec = atan2(playerY - posY, playerX - posX);
 }

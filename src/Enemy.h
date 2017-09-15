@@ -38,7 +38,7 @@ public:
 
 	//update and state setting
 	virtual void update(const double& frameDiff) = 0;
-	virtual void setState(int playerX, int playerY) = 0;
+	virtual void setState(float playerX, float playerY) = 0;
 
 	//drawing
 	virtual void draw() = 0;

@@ -28,7 +28,13 @@ void DrawingHelpers::drawCircle(int* color){
 }
 
 void DrawingHelpers::drawSquare(int * color){
-	//draw a square
+	setRGB(color);
+	glBegin(GL_TRIANGLE_STRIP);{
+		glVertex2f(20,20);
+		glVertex2f(20,-20);
+		glVertex2f(-20,20);
+		glVertex2f(-20,-20);
+	} glEnd();
 
 }
 

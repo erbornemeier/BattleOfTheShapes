@@ -32,14 +32,14 @@ class SquareEnemy : public Enemy {
 
 public:
 	SquareEnemy();
-	SquareEnemy(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec, float playerX, float playerY);
+	SquareEnemy(GLFWwindow* window, float x, float y, int* colorPrim, int* colorSec);
 
 	//drawing
 	void draw () override;
 
 	//update and state setting
 	void update(const double& frameDiff) override;
-	void setState(int playerX, int playerY) override;
+	virtual void setState(float playerX, float playerY);
 
 private:
 
