@@ -31,18 +31,23 @@ using namespace std;
 class Level {
 
 	public:
-		Level(Point playerPos, int numEnemies, float enemySpawnRate, float scoreMult);
+		Level(GLFWwindow* window, Point playerPos, int numEnemies, float enemySpawnRate, float scoreMult);
 
 		void load(Player& p, int& numEnemies, float& enemySpawnRate, float& scoreMult);
 
 	private:
+
+		GLFWwindow* window;
+
 		Point playerPos;
 		int numEnemies;
 		float enemySpawnRate;
 		float scoreMult;
 
-		int* colorPrimPlayer, colorSecPlayer;
-		int* colorPrimEnemy, colorSecEnemy;
+		int* colorPrimPlayer;
+		int* colorSecPlayer;
+		int* colorPrimEnemy;
+		int* colorSecEnemy;
 
 
 };

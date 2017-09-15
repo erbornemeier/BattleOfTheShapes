@@ -29,10 +29,10 @@ void SquareEnemy::draw () {
 //update and state setting
 void SquareEnemy::update(const double& frameDiff) {
 
-	posX += frameDiff * transSpeed * cos(playerVec);
-	posY += frameDiff * transSpeed * sin(playerVec);
+	pos.x += frameDiff * transSpeed * cos(playerVec);
+	pos.y += frameDiff * transSpeed * sin(playerVec);
 }
 
 void SquareEnemy::setState(Point playerPos) {
-	playerVec = atan2(playerPos.y - posY, playerPos.x - posX);
+	playerVec = atan2(playerPos.y - pos.y, playerPos.x - pos.x);
 }

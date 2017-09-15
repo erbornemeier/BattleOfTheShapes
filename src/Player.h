@@ -44,8 +44,7 @@ public:
 	Player(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec);
 
 	//getters
-	float getPosX();
-	float getPosY();
+	Point getPos();
 
 	//update and state setting
 	void update(const double& frameDiff);

@@ -16,7 +16,7 @@ Player::Player(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec){
 	this->rotating = noRot;
 }
 
-float Player::getPos(){ return pos; }
+Point Player::getPos(){ return pos; }
 
 void Player::update(const double& frameDiff){
 		pos.x += frameDiff * moving * transSpeed * cos(DrawingHelpers::toRad(rot));
@@ -48,7 +48,7 @@ void Player::shoot(float mx, float my){
 	//timeToFire = 5;
 
 	//angle between mouse and player center
-	float shootAngle = atan2(my - posY, mx - posX);
+	float shootAngle = atan2(my - pos.y, mx - pos.x);
 
 	//create a new bullet
 	bullets.push_back(Bullet(window, pos, shootAngle, 
@@ -57,7 +57,7 @@ void Player::shoot(float mx, float my){
 }
 
 void Player::draw(){
-	glm::mat4 transMtx = glm::translate(glm::mat4(), glm::vec3(posX,posY,0));
+	glm::mat4 transMtx = glm::translate(glm::mat4(), glm::vec3(pos.x,pos.y,0));
 	glMultMatrixf(&(transMtx)[0][0]);{
 		glm::mat4 rotMtx = glm::rotate(glm::mat4(), DrawingHelpers::toRad(rot - 90) , glm::vec3(0,0,1));
 		glMultMatrixf(&(rotMtx)[0][0]);{

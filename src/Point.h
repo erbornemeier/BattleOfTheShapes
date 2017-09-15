@@ -11,6 +11,7 @@
  *      can also be used in a 2D and 1D sense much like an OpenGL object
  *  
  */
+#pragma once
 
 class Point {
 	public:

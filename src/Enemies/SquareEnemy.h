@@ -25,9 +25,9 @@
 #include <cmath>
 using namespace std;
 
-#include "Enemy.h"
-#include "DrawingHelpers.h"
-#include "Point.h"
+#include "../Enemy.h"
+#include "../DrawingHelpers.h"
+#include "../Point.h"
 
 class SquareEnemy : public Enemy {
 

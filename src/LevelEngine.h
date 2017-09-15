@@ -32,6 +32,7 @@
 #include <chrono>
 #include <unistd.h>
 #include <fstream>
+#include <string>
 using namespace std;
 
 //custom classes
@@ -40,19 +41,28 @@ using namespace std;
 #include "Enemies/SquareEnemy.h"
 #include "DrawingHelpers.h"
 #include "Point.h"
+#include "Level.h"
 
 class LevelEngine {
 
 public:
 
 	LevelEngine();
+	LevelEngine(GLFWwindow* window);
 
-	void loadLevelsFromFile(String levelFile);
+	void loadLevelsFromFile(string levelFile);
 	void loadLevel(int levelNum);
 
 	void runLevel(const float& frameDiff);
 
+
+	void setLevelState(bool up, bool down, bool left, bool right, bool leftMouse, Point mouseLoc);
+	void updateLevel(const float& frameDiff);
+	void drawLevel();
+
 private:
+
+	GLFWwindow* window;
 
 	vector <Level* > levels;
 	int currentLevel;
@@ -60,7 +70,8 @@ private:
 	Player p;
 	vector <Enemy*> enemies;
 
-	void updateLevel();
-	void drawLevel();
+	int numEnemies;
+	float enemySpawnRate;
+	float scoreMult;
 
-}
+};

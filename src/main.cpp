@@ -49,6 +49,7 @@ bool rightKey = false;
 bool leftKey = false;
 bool upKey = false;
 bool downKey = false;
+bool clicked = true;
 
 //mouse info
 float M_X, M_Y;
@@ -122,10 +123,14 @@ void keyboard_callback( GLFWwindow *window, int key, int scancode, int action, i
 				break;
 		}
 	} 
-	player.setState(upKey, downKey, leftKey, rightKey);
+	levelEngine.setLevelState(upKey, downKey, leftKey, rightKey, false, Point(M_X, M_Y));
 }
 void mouse_button_callback( GLFWwindow *window, int button, int action, int mods ){
-	if (action != GLFW_RELEASE) player.shoot(M_X, M_Y);
+	if (!clicked && action != GLFW_RELEASE) {
+		clicked = true;
+		levelEngine.setLevelState(upKey, downKey, leftKey, rightKey, true, Point(M_X, M_Y)); //shoot
+	}
+	else clicked = false;
 }
 
 /*PASSIVE EVENTS*/
@@ -207,10 +212,7 @@ void setupOpenGL() {
 //		This method will contain all of the objects to be drawn.
 //
 void renderScene() {
-	player.drawPlayer(); 
-	player.drawBullets();
-	for (Enemy* e: enemies)
-		e->draw();
+	levelEngine.drawLevel();
 }
 //
 //	void update()
@@ -219,11 +221,7 @@ void renderScene() {
 //
 
 void update(const double& frameDiff){
-	player.update(frameDiff);
-	for (Enemy* e: enemies){
-		e->setState(player.getPosX(), player.getPosY());
-		e->update(frameDiff);
-	}
+	levelEngine.updateLevel(frameDiff);
 }
 
 //*************************************************************************************
@@ -240,11 +238,16 @@ int main( int argc, char* argv[] ) {
 										// GLFW sets up our OpenGL context so must be done first
 	setupOpenGL();						// initialize all of the OpenGL specific information
 
+	/*
 	player = Player(window, WINDOW_WIDTH/2.0, WINDOW_HEIGHT/2.0, 
 			        DrawingHelpers::COLOR_RED, DrawingHelpers::COLOR_BLACK);
 	for (int i = 1; i <= 1; i++)
 		enemies.push_back(new SquareEnemy(window,(float) i*WINDOW_WIDTH/8, WINDOW_HEIGHT/8.0, 
 			        DrawingHelpers::COLOR_BLUE, DrawingHelpers::COLOR_BLACK));
+			        */
+	string levelFile = "./Levels/levelsData.txt";
+	levelEngine.loadLevelsFromFile(levelFile);
+
 	//  This is our draw loop - all rendering is done here.  We use a loop to keep the window open
 	//	until the user decides to close the window and quit the program.  Without a loop, the
 	//	window will display once and then the program exits.
@@ -290,6 +293,7 @@ int main( int argc, char* argv[] ) {
 			end = chrono::system_clock::now();	//get the end of the draw loop time
 			chrono::duration<double> frameDiff = (end - start)* 100; //find draw loop time and scale it
 
+			
 			update(frameDiff.count());			//update all objects
 	}
 
