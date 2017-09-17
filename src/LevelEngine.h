@@ -36,11 +36,13 @@
 using namespace std;
 
 //custom classes
-#include "Player.h"
-#include "Enemy.h"
-#include "Enemies/SquareEnemy.h"
-#include "DrawingHelpers.h"
-#include "Point.h"
+#include "GameObjects/Player.h"
+#include "GameObjects/Enemy.h"
+#include "GameObjects/SquareEnemy.h"
+
+#include "Helpers/DrawingHelpers.h"
+#include "Helpers/Point.h"
+
 #include "Level.h"
 
 class LevelEngine {
@@ -55,23 +57,31 @@ public:
 
 	void runLevel(const float& frameDiff);
 
-
 	void setLevelState(bool up, bool down, bool left, bool right, bool leftMouse, Point mouseLoc);
 	void updateLevel(const float& frameDiff);
 	void drawLevel();
+
+	void playerShoot(const float& mx, const float& my);
+	void spawnEnemy();
+
+	void checkCollisions();
 
 private:
 
 	GLFWwindow* window;
 
-	vector <Level* > levels;
+	vector <Level*> levels;
 	int currentLevel;
 
-	Player p;
+	Player* p;
 	vector <Enemy*> enemies;
 
 	int numEnemies;
+	int enemiesKilled;
+	
 	float enemySpawnRate;
 	float scoreMult;
+
+	float nextSpawn;
 
 };

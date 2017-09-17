@@ -19,21 +19,25 @@
 #include <chrono>
 #include <unistd.h>
 #include <fstream>
+#include <stdlib.h>
+#include <ctime>
 using namespace std;
 
 //custom classes
-#include "Player.h"
-#include "Enemy.h"
-#include "Enemies/SquareEnemy.h"
-#include "DrawingHelpers.h"
-#include "Point.h"
+#include "GameObjects/Player.h"
+#include "GameObjects/Enemy.h"
+#include "GameObjects/SquareEnemy.h"
+#include "Helpers/DrawingHelpers.h"
+#include "Helpers/Point.h"
 
 class Level {
 
 	public:
 		Level(GLFWwindow* window, Point playerPos, int numEnemies, float enemySpawnRate, float scoreMult);
 
-		void load(Player& p, int& numEnemies, float& enemySpawnRate, float& scoreMult);
+		Player* getPlayer();
+		Enemy*  getNewEnemy();
+		void loadAttributes(int& numEnemies, float& enemySpawnRate, float& scoreMult);
 
 	private:
 
