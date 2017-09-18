@@ -32,4 +32,16 @@ using namespace std;
 
 class LevelEngine {
 
+public:
+	LevelEngine::LevelEngine(){}
+	LevelEngine::LevelEngine(GLFWwindow* window);
+
+	void LevelEngine::loadLevelsFromFile(string levelFile);
+	void LevelEngine::loadLevel(int levelNum);
+
+	void LevelEngine::runLevel(const float& frameDiff);
+	void LevelEngine::setLevelState();
+
+	void LevelEngine::updateLevel(const float& frameDiff);
+	void LevelEngine::drawLevel();
 }
