@@ -1,16 +1,3 @@
-/*
- *  CSCI 441 Computer Graphics, Fall 2017
- *
- *  Project: SQ1
- *  File: LevelEngine.h
- *
- *  Author: Easton Bornemeier
- *
- *  Description:
- *		The class that holds the control flow of the levels as well as level
- *      loading and design
- */
-
 #include <GLFW/glfw3.h>		// include GLFW framework header
 
 #ifdef __APPLE__			// if compiling on Mac OS
@@ -32,56 +19,17 @@
 #include <chrono>
 #include <unistd.h>
 #include <fstream>
-#include <string>
+#include <stdlib.h>
+#include <ctime>
 using namespace std;
 
 //custom classes
 #include "GameObjects/Player.h"
 #include "GameObjects/Enemy.h"
 #include "GameObjects/SquareEnemy.h"
-
 #include "Helpers/DrawingHelpers.h"
 #include "Helpers/Point.h"
 
-#include "Level.h"
-
 class LevelEngine {
 
-public:
-
-	LevelEngine();
-	LevelEngine(GLFWwindow* window);
-
-	void loadLevelsFromFile(string levelFile);
-	void loadLevel(int levelNum);
-
-	void runLevel(const float& frameDiff);
-
-	void setLevelState(bool up, bool down, bool left, bool right, bool leftMouse, Point mouseLoc);
-	void updateLevel(const float& frameDiff);
-	void drawLevel();
-
-	void playerShoot(const float& mx, const float& my);
-	void spawnEnemy();
-
-	void checkCollisions();
-
-private:
-
-	GLFWwindow* window;
-
-	vector <Level*> levels;
-	int currentLevel;
-
-	Player* p;
-	vector <Enemy*> enemies;
-
-	int numEnemies;
-	int enemiesKilled;
-	
-	float enemySpawnRate;
-	float scoreMult;
-
-	float nextSpawn;
-
-};
+}

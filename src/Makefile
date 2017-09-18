@@ -22,7 +22,7 @@
 ########################################
 
 TARGET = sq1
-OBJECTS = main.o Player.o Bullet.o DrawingHelpers.o Enemy.o Enemies/SquareEnemy.o Level.o LevelEngine.o
+OBJECTS = main.o 
 
 LOCAL_INC_PATH = /Users/jpaone/Desktop/include
 LOCAL_LIB_PATH = /Users/jpaone/Desktop/lib
@@ -120,4 +120,4 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CFLAGS) -o $@ $^ $(LIBPATH) $(LIBS)
 
 # DEPENDENCIES
-main.o: main.cpp Player.cpp Bullet.cpp DrawingHelpers.cpp Enemy.cpp Enemies/SquareEnemy.cpp Level.cpp LevelEngine.cpp
+main.o: main.cpp

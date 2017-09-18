@@ -49,7 +49,6 @@ bool rightKey = false;
 bool leftKey = false;
 bool upKey = false;
 bool downKey = false;
-bool clicked = true;
 
 //mouse info
 float M_X, M_Y;
@@ -126,11 +125,9 @@ void keyboard_callback( GLFWwindow *window, int key, int scancode, int action, i
 	levelEngine.setLevelState(upKey, downKey, leftKey, rightKey, false, Point(M_X, M_Y));
 }
 void mouse_button_callback( GLFWwindow *window, int button, int action, int mods ){
-	if (!clicked && action != GLFW_RELEASE) {
-		clicked = true;
-		levelEngine.setLevelState(upKey, downKey, leftKey, rightKey, true, Point(M_X, M_Y)); //shoot
+	if (action != GLFW_RELEASE) {
+		levelEngine.playerShoot(M_X, M_Y); //shoot
 	}
-	else clicked = false;
 }
 
 /*PASSIVE EVENTS*/
@@ -221,7 +218,7 @@ void renderScene() {
 //
 
 void update(const double& frameDiff){
-	levelEngine.updateLevel(frameDiff);
+	levelEngine.runLevel(frameDiff);
 }
 
 //*************************************************************************************
@@ -247,7 +244,8 @@ int main( int argc, char* argv[] ) {
 			        */
 	string levelFile = "./Levels/levelsData.txt";
 	levelEngine.loadLevelsFromFile(levelFile);
-
+	levelEngine.loadLevel(0);
+	cout << "Loaded levels from file " << levelFile << endl;
 	//  This is our draw loop - all rendering is done here.  We use a loop to keep the window open
 	//	until the user decides to close the window and quit the program.  Without a loop, the
 	//	window will display once and then the program exits.
