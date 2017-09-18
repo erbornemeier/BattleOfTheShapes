@@ -34,6 +34,8 @@ class SquareEnemy : public Enemy {
 public:
 	SquareEnemy(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec);
 
+	virtual ~SquareEnemy();
+
 	//drawing
 	void draw () override;
 

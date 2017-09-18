@@ -249,7 +249,7 @@ int main( int argc, char* argv[] ) {
 	//  This is our draw loop - all rendering is done here.  We use a loop to keep the window open
 	//	until the user decides to close the window and quit the program.  Without a loop, the
 	//	window will display once and then the program exits.
-	while( !glfwWindowShouldClose(window) ) {
+	while( !glfwWindowShouldClose(window) && !levelEngine.hasWon()) {
 			chrono::time_point<chrono::system_clock> start, end;
 			start = chrono::system_clock::now();	//get the start of the draw loop time
 
@@ -293,6 +293,10 @@ int main( int argc, char* argv[] ) {
 
 			
 			update(frameDiff.count());			//update all objects
+	}
+
+	if (levelEngine.hasWon()){
+		cout << "---GAME COMPLETE---" << endl;
 	}
 
 	return 0;

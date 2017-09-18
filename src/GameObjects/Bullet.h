@@ -44,6 +44,7 @@ public:
 	//destructor
 	~Bullet();
 
+	virtual Point getPos();
 	//update and state setting
 	void update(const double& frameDiff);
 

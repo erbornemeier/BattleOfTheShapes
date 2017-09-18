@@ -41,8 +41,18 @@ void LevelEngine::loadLevel(int levelNum){
 
 void LevelEngine::runLevel(const float& frameDiff){
 
-		if (enemiesKilled >= numEnemies)
-			loadLevel(currentLevel += 1 ); 
+
+
+		if (enemiesKilled >= numEnemies){
+			currentLevel+= 1;
+			if ((unsigned int)currentLevel < levels.size())
+				loadLevel(currentLevel);
+			else {
+				cout << "YOU WIN!" << endl;
+				isWon = true;
+			}
+		}
+
 
 		nextSpawn -= frameDiff;
 		if(currentSpawned < numEnemies && nextSpawn <= 0){
@@ -86,17 +96,25 @@ void LevelEngine::playerShoot(const float& mx, const float& my){
 
 void LevelEngine::checkCollisions(){
 	for (Enemy* e: enemies){
-		for (Bullet* b: p->getBullets()){
-			if (doesCollide(e->getBoundingBox(), b->getBoundingBox())){
-				delete e;
+		set<Bullet *> bullets = p->getBullets();
+		for (Bullet* b: bullets){
+			if (doesCollide(e->getPos(), b->getPos())){
 				enemiesKilled ++;
-				enemies.erase(b);
+				enemies.erase(e);
+				p->eraseBullet(b);
+				break;
 			}
 		}
 	}
 }
 
-bool doesCollide(BoundingBox* a, BoundingBox* b){
+bool LevelEngine::doesCollide(Point a, Point b){
+	if (a.distBetween(b) < 50)
+		return true;
+	return false;
 
-	
+}
+
+bool LevelEngine::hasWon(){
+	return isWon;
 }

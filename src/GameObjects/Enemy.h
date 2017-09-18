@@ -37,6 +37,9 @@ public:
 	Enemy();
 	Enemy(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec);
 
+	virtual ~Enemy();
+
+	virtual Point getPos();
 	//update and state setting
 	virtual void update(const double& frameDiff) = 0;
 	virtual void setState(Point playerPos) = 0;

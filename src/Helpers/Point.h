@@ -12,6 +12,8 @@
  *  
  */
 #pragma once
+#include <cmath>
+using namespace std;
 
 class Point {
 	public:
@@ -21,6 +23,15 @@ class Point {
 			this->z = z;
 		}
 
+		Point operator + (const Point& p2){
+			return Point(this->x + p2.x, this->y + p2.y);
+		}
+		Point operator - (const Point& p2){
+			return Point(this->x - p2.x, this->y - p2.y);
+		}
+		float distBetween(Point& p2){
+			return pow(pow(this->x - p2.x,2) + pow(this->y - p2.y,2),0.5);
+		}
 		float x;
 		float y;
 		float z;

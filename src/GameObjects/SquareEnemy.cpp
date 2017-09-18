@@ -6,6 +6,10 @@ SquareEnemy::SquareEnemy(GLFWwindow* window, Point pos, int* colorPrim, int* col
 		transSpeed = 3;
 	}
 
+SquareEnemy::~SquareEnemy(){
+	delete this;
+}
+
 //drawing
 void SquareEnemy::draw () {
 	glm::mat4 transMtx = glm::translate(glm::mat4(), glm::vec3(pos.x,pos.y,0));

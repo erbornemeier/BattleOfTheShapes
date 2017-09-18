@@ -51,7 +51,9 @@ public:
 	void spawnEnemy();
 
 	void checkCollisions();
-	bool doesCollide(BoundingBox* a, BoundingBox* b)
+	bool doesCollide(Point a, Point b);
+
+	bool hasWon();
 
 private:
 		GLFWwindow* window;
@@ -71,4 +73,6 @@ private:
 		int enemiesKilled;
 
 		int currentLevel;
+
+		bool isWon = false;
 };

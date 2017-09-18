@@ -16,7 +16,9 @@ Player::Player(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec){
 	this->rotating = noRot;
 }
 
-Point Player::getPos(){ return pos; }
+Point Player::getPos(){ 
+	return pos;
+}
 
 set<Bullet *> Player::getBullets(){ return bullets; }
 
@@ -98,9 +100,11 @@ void Player::checkBullets(){
 	//window bounds checking
 	for (Bullet* b: bullets){
 		if (!b->inBounds(bulletBoundW, bulletBoundH)){
-			delete b;
 			bullets.erase(b);
 		}
 	}
+}
 
+void Player::eraseBullet(Bullet * b){
+	bullets.erase(b);
 }

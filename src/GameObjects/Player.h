@@ -61,6 +61,8 @@ public:
 	//bounds check
 	void checkBullets();
 
+	void eraseBullet(Bullet * b);
+
 
 private:
 

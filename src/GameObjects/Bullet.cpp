@@ -15,6 +15,10 @@ Bullet::Bullet(GLFWwindow* window, Point pos, float dir, int* colorPrim, int* co
 
 Bullet::~Bullet(){}
 
+Point Bullet::getPos(){
+	return pos;
+}
+
 void Bullet::update(const double& frameDiff){
 		pos.x += frameDiff  * speed * cos(dir);
 		pos.y += frameDiff  * speed * sin(dir);
