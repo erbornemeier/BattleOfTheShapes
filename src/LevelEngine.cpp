@@ -25,7 +25,8 @@ void LevelEngine::loadLevelsFromFile(string levelFile){
 }
 
 void LevelEngine::loadLevel(int levelNum){
-	levels.at(levelNum)->load(window, p, numEnemies, enemySpawnRate, scoreMult);
+	delete p;
+	p = levels.at(currentLevel)->getPlayer();
 }
 
 void LevelEngine::runLevel(const float& frameDiff){
@@ -37,21 +38,29 @@ void LevelEngine::runLevel(const float& frameDiff){
 	//}
 }
 
-void LevelEngine::setLevelState(bool up, bool down, bool left, bool right, bool leftMouse, Point mouseLoc){
-	player.setState(up, down, left, right);
-	for (Enemy* e: enemies)
-		e->setState(player.getPos());
+void LevelEngine::setLevelState(bool up, bool down, bool left, bool right){
+	p->setState(up, down, left, right);
 }
 
 void LevelEngine::updateLevel(const float& frameDiff){
-	player.update(frameDiff);
-	for (Enemy* e: enemies)
+	p->update(frameDiff);
+	for (Enemy* e: enemies){
+		e->setState(p->getPos());
 		e->update(frameDiff);
+	}
 }
 
 void LevelEngine::drawLevel(){
-	player.draw();
-	player.drawBullets();
+	p->draw();
+	p->drawBullets();
 	for (Enemy* e: enemies)
 		e->draw();
+}
+
+void LevelEngine::spawnEnemy(){
+	enemies.insert(levels.at(currentLevel)->getNewEnemy());
+}
+
+void LevelEngine::playerShoot(const float& mx, const float& my){
+	p->shoot(mx, my);
 }

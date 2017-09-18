@@ -122,7 +122,7 @@ void keyboard_callback( GLFWwindow *window, int key, int scancode, int action, i
 				break;
 		}
 	} 
-	levelEngine.setLevelState(upKey, downKey, leftKey, rightKey, false, Point(M_X, M_Y));
+	levelEngine.setLevelState(upKey, downKey, leftKey, rightKey);
 }
 void mouse_button_callback( GLFWwindow *window, int button, int action, int mods ){
 	if (action != GLFW_RELEASE) {
@@ -245,7 +245,7 @@ int main( int argc, char* argv[] ) {
 	string levelFile = "./Levels/levelsData.txt";
 	levelEngine.loadLevelsFromFile(levelFile);
 	levelEngine.loadLevel(0);
-	cout << "Loaded levels from file " << levelFile << endl;
+
 	//  This is our draw loop - all rendering is done here.  We use a loop to keep the window open
 	//	until the user decides to close the window and quit the program.  Without a loop, the
 	//	window will display once and then the program exits.

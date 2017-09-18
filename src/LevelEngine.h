@@ -15,6 +15,7 @@
 
 //addon std libs
 #include <iostream>
+#include <set>
 #include <vector>
 #include <chrono>
 #include <unistd.h>
@@ -29,19 +30,38 @@ using namespace std;
 #include "GameObjects/SquareEnemy.h"
 #include "Helpers/DrawingHelpers.h"
 #include "Helpers/Point.h"
+#include "Level.h"
 
 class LevelEngine {
 
 public:
-	LevelEngine::LevelEngine(){}
-	LevelEngine::LevelEngine(GLFWwindow* window);
+	LevelEngine();
+	LevelEngine(GLFWwindow* window);
 
-	void LevelEngine::loadLevelsFromFile(string levelFile);
-	void LevelEngine::loadLevel(int levelNum);
+	void loadLevelsFromFile(string levelFile);
+	void loadLevel(int levelNum);
 
-	void LevelEngine::runLevel(const float& frameDiff);
-	void LevelEngine::setLevelState();
+	void runLevel(const float& frameDiff);
+	void setLevelState(bool up, bool down, bool left, bool right);
 
-	void LevelEngine::updateLevel(const float& frameDiff);
-	void LevelEngine::drawLevel();
-}
+	void updateLevel(const float& frameDiff);
+	void drawLevel();
+
+	void playerShoot(const float& mx, const float& my);
+	void spawnEnemy();
+
+private:
+		GLFWwindow* window;
+
+		vector<Level*> levels;
+
+		Player* p;
+		set<Enemy*> enemies;
+
+		Point playerPos;
+		int numEnemies;
+		float enemySpawnRate;
+		float scoreMult;
+
+		int currentLevel;
+};

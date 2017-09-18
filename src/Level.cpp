@@ -1,6 +1,6 @@
 #include "Level.h"
 
-Level(GLFWwindow* window, Point playerPos, int numEnemies, float enemySpawnRate, float scoreMult){
+Level::Level(GLFWwindow* window, Point playerPos, int numEnemies, float enemySpawnRate, float scoreMult){
 	this->window = window;
 	this->playerPos = playerPos;
 	this->numEnemies = numEnemies;
@@ -14,11 +14,11 @@ Level(GLFWwindow* window, Point playerPos, int numEnemies, float enemySpawnRate,
 }
 
 
-Player* getPlayer(){
-	Player* p = new Player(this->window, playerPos, colorPrimPlayer, colorSecPlayer);
+Player* Level::getPlayer(){
+	Player* p = new Player(window, playerPos, colorPrimPlayer, colorSecPlayer);
 	return p;
 }
-Enemy*  getNewEnemy(){
+Enemy*  Level::getNewEnemy(){
 	int randX = rand() % 1920;
 	if (randX < 1920/2.0) randX = -randX;
 	else randX = 1920*2.0 - randX;
@@ -31,7 +31,7 @@ Enemy*  getNewEnemy(){
 	return e;
 
 }
-void loadAttributes(int& numEnemies, float& enemySpawnRate, float& scoreMult){
+void Level::loadAttributes(int& numEnemies, float& enemySpawnRate, float& scoreMult){
 	numEnemies = this->numEnemies;
 	enemySpawnRate = this->enemySpawnRate;
 	scoreMult = this->scoreMult;
