@@ -27,15 +27,21 @@ void LevelEngine::loadLevelsFromFile(string levelFile){
 void LevelEngine::loadLevel(int levelNum){
 	delete p;
 	p = levels.at(currentLevel)->getPlayer();
+	levels.at(currentLevel)->loadAttributes(numEnemies, enemySpawnRate, scoreMult);
+	nextSpawn = enemySpawnRate;
 }
 
 void LevelEngine::runLevel(const float& frameDiff){
-	//if (!levels.at(i).isComplete()){
+
+		nextSpawn -= frameDiff;
+		if(nextSpawn <= 0){
+			spawnEnemy();
+			nextSpawn = enemySpawnRate;
+			numEnemies--;
+		}
+
 		updateLevel(frameDiff);
 		drawLevel();
-	//} else {
-	//	currentLevel ++;
-	//}
 }
 
 void LevelEngine::setLevelState(bool up, bool down, bool left, bool right){
@@ -58,7 +64,7 @@ void LevelEngine::drawLevel(){
 }
 
 void LevelEngine::spawnEnemy(){
-	enemies.insert(levels.at(currentLevel)->getNewEnemy());
+	enemies.insert(levels.at(currentLevel)->getNewEnemy() );
 }
 
 void LevelEngine::playerShoot(const float& mx, const float& my){

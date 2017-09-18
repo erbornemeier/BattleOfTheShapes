@@ -63,5 +63,7 @@ private:
 		float enemySpawnRate;
 		float scoreMult;
 
+		float nextSpawn;
+
 		int currentLevel;
 };
