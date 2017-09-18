@@ -18,6 +18,8 @@ Player::Player(GLFWwindow* window, Point pos, int* colorPrim, int* colorSec){
 
 Point Player::getPos(){ return pos; }
 
+set<Bullet *> Player::getBullets(){ return bullets; }
+
 void Player::update(const double& frameDiff){
 		pos.x += frameDiff * moving * transSpeed * cos(DrawingHelpers::toRad(rot));
 		pos.y += frameDiff * moving * transSpeed * sin(DrawingHelpers::toRad(rot));

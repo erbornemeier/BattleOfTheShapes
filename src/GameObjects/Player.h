@@ -45,6 +45,7 @@ public:
 
 	//getters
 	Point getPos();
+	set<Bullet *> getBullets();
 
 	//update and state setting
 	void update(const double& frameDiff);

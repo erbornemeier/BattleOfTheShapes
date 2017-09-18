@@ -25,22 +25,35 @@ void LevelEngine::loadLevelsFromFile(string levelFile){
 }
 
 void LevelEngine::loadLevel(int levelNum){
+	if (levels.at(levelNum) == NULL){
+		cout << "ALL LEVELS COMPLETE" << endl;
+		return;
+	}
+
 	delete p;
 	p = levels.at(currentLevel)->getPlayer();
 	levels.at(currentLevel)->loadAttributes(numEnemies, enemySpawnRate, scoreMult);
+
 	nextSpawn = enemySpawnRate;
+	currentSpawned = 0;
+	enemiesKilled = 0;
 }
 
 void LevelEngine::runLevel(const float& frameDiff){
 
+		if (enemiesKilled >= numEnemies)
+			loadLevel(currentLevel += 1 ); 
+
 		nextSpawn -= frameDiff;
-		if(nextSpawn <= 0){
+		if(currentSpawned < numEnemies && nextSpawn <= 0){
 			spawnEnemy();
 			nextSpawn = enemySpawnRate;
-			numEnemies--;
+			currentSpawned++;
 		}
 
+
 		updateLevel(frameDiff);
+		checkCollisions();
 		drawLevel();
 }
 
@@ -69,4 +82,21 @@ void LevelEngine::spawnEnemy(){
 
 void LevelEngine::playerShoot(const float& mx, const float& my){
 	p->shoot(mx, my);
+}
+
+void LevelEngine::checkCollisions(){
+	for (Enemy* e: enemies){
+		for (Bullet* b: p->getBullets()){
+			if (doesCollide(e->getBoundingBox(), b->getBoundingBox())){
+				delete e;
+				enemiesKilled ++;
+				enemies.erase(b);
+			}
+		}
+	}
+}
+
+bool doesCollide(BoundingBox* a, BoundingBox* b){
+
+	
 }

@@ -50,6 +50,9 @@ public:
 	void playerShoot(const float& mx, const float& my);
 	void spawnEnemy();
 
+	void checkCollisions();
+	bool doesCollide(BoundingBox* a, BoundingBox* b)
+
 private:
 		GLFWwindow* window;
 
@@ -64,6 +67,8 @@ private:
 		float scoreMult;
 
 		float nextSpawn;
+		int currentSpawned;
+		int enemiesKilled;
 
 		int currentLevel;
 };
