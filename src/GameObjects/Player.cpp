@@ -27,12 +27,16 @@ void Player::update(const double& frameDiff){
 		pos.y += frameDiff * moving * transSpeed * sin(DrawingHelpers::toRad(rot));
 		rot   += frameDiff * rotating * rotSpeed;
 
+		if (pos.x > 1920) pos.x = 1920;
+		else if (pos.x < 0) pos.x = 0;
+		if (pos.y > 1080) pos.y = 1080;
+		else if (pos.y < 0) pos.y = 0;
 		checkBullets();
 		
 		for (Bullet* b: bullets){
 			b->update(frameDiff);
 		}
-		
+		timeToFire -= frameDiff* 0.15;
 }
 
 void Player::setState(bool up, bool down, bool left, bool right){
@@ -51,8 +55,7 @@ void Player::shoot(float mx, float my){
 	//not ready to fire or too many bullets
 	if (timeToFire > 0 || bullets.size() >= maxBullets) 
 		return;
-	//timeToFire = 5;
-
+	timeToFire = 5;
 	//angle between mouse and player center
 	float shootAngle = atan2(my - pos.y, mx - pos.x);
 

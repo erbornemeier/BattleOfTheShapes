@@ -34,6 +34,8 @@ void LevelEngine::loadLevel(int levelNum){
 	p = levels.at(currentLevel)->getPlayer();
 	levels.at(currentLevel)->loadAttributes(numEnemies, enemySpawnRate, scoreMult);
 
+	cout << "ADVANCING TO LEVEL " << currentLevel + 1 << endl;
+
 	nextSpawn = enemySpawnRate;
 	currentSpawned = 0;
 	enemiesKilled = 0;
@@ -96,12 +98,17 @@ void LevelEngine::playerShoot(const float& mx, const float& my){
 
 void LevelEngine::checkCollisions(){
 	for (Enemy* e: enemies){
+		if (doesCollide(e->getPos(), p->getPos())){
+			cout << "YOU LOST!!" << endl;
+			isWon = true;
+		}
 		set<Bullet *> bullets = p->getBullets();
 		for (Bullet* b: bullets){
 			if (doesCollide(e->getPos(), b->getPos())){
 				enemiesKilled ++;
 				enemies.erase(e);
 				p->eraseBullet(b);
+				score += 1 * scoreMult;
 				break;
 			}
 		}
@@ -109,7 +116,7 @@ void LevelEngine::checkCollisions(){
 }
 
 bool LevelEngine::doesCollide(Point a, Point b){
-	if (a.distBetween(b) < 50)
+	if (a.distBetween(b) < 75)
 		return true;
 	return false;
 
@@ -117,4 +124,8 @@ bool LevelEngine::doesCollide(Point a, Point b){
 
 bool LevelEngine::hasWon(){
 	return isWon;
+}
+
+float LevelEngine::getScore(){
+	return score;
 }

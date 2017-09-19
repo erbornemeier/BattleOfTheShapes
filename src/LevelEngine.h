@@ -54,6 +54,7 @@ public:
 	bool doesCollide(Point a, Point b);
 
 	bool hasWon();
+	float getScore();
 
 private:
 		GLFWwindow* window;
@@ -75,4 +76,6 @@ private:
 		int currentLevel;
 
 		bool isWon = false;
+
+		float score = 0;
 };

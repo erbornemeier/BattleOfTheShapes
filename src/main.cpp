@@ -297,6 +297,7 @@ int main( int argc, char* argv[] ) {
 
 	if (levelEngine.hasWon()){
 		cout << "---GAME COMPLETE---" << endl;
+		cout << "SCORE: " << levelEngine.getScore() << endl;
 	}
 
 	return 0;

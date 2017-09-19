@@ -74,7 +74,7 @@ private:
 	float rot;
 	float transSpeed = 5;
 	float rotSpeed = 2;  
-	uint maxBullets = 50;
+	uint maxBullets = 5;
 	int* colorPrim;
 	int* colorSec;
 
